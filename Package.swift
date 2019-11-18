@@ -8,8 +8,8 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/nuclearace/SwiftDiscord", .revision("1cc0ffed2edb10e3eb0e4ec107c109ee8e678482" /* from development branch */)),
-        .package(url: "https://github.com/malcommac/Hydra", from: "2.0.2"),
+        .package(url: "https://github.com/nuclearace/SwiftDiscord", .revision("5ea8875edf282350c843feb51274122423fd02b5" /* from vapor3 branch */)),
+        .package(url: "https://github.com/rinsuki/Hydra", .branch("fix/linux-build-error")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
