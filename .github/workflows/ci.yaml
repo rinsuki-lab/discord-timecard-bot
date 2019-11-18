@@ -1,0 +1,14 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  docker:
+    name: Docker
+    steps:
+      - uses: actions/checkout@master
+      - run: docker build .
+        env:
+          DOCKER_BUILDKIT: 1
