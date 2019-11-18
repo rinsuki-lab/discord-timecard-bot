@@ -6,7 +6,7 @@ on:
 
 jobs:
   docker:
-    name: Docker
+    runs-on: Ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - run: docker build .
