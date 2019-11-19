@@ -13,7 +13,7 @@ jobs:
         env:
           DOCKER_BUILDKIT: 1
       - run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | docker login -u rinsuki --password-stdin docker.pkg.github.com
-          docker push docker.pkg.github.com/rinsuki/discord-timecard-bot/app:latest
-          docker logout docker.pkg.github.com
-        name: Push to GitHub Packages
+          echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u rinsuki --password-stdin
+          docker push rinsuki/discord-timecard-bot:latest
+          docker logout
+        name: Push to DockerHub
