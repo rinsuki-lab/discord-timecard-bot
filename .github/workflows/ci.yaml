@@ -9,7 +9,7 @@ jobs:
     runs-on: Ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - run: docker build --tag docker.pkg.github.com/rinsuki/discord-timecard-bot/app:latest .
+      - run: docker build --tag rinsuki/discord-timecard-bot:latest .
         env:
           DOCKER_BUILDKIT: 1
       - run: |
