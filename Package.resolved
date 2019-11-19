@@ -38,6 +38,15 @@
         }
       },
       {
+        "package": "swift-sea-api",
+        "repositoryURL": "https://github.com/rinsuki/swift-sea-api",
+        "state": {
+          "branch": null,
+          "revision": "8070d3bc4d83ca43dc6658880fa08df3da666131",
+          "version": null
+        }
+      },
+      {
         "package": "SwiftDiscord",
         "repositoryURL": "https://github.com/nuclearace/SwiftDiscord",
         "state": {
