@@ -11,12 +11,17 @@ jobs:
       - uses: actions/checkout@master
       - run: |
           docker build --tag rinsuki/discord-timecard-bot:latest .
-          docker build --target builder --tag rinsuki/discord-timecard-bot:only-for-build-cache-builder .
+          docker build --target builder --tag docker.pkg.github.com/rinsuki/discord-timecard-bot/only-for-build-cache-builder:latest .
         env:
           DOCKER_BUILDKIT: 1
       - run: |
           echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u rinsuki --password-stdin
           docker push rinsuki/discord-timecard-bot:latest
-          docker push rinsuki/discord-timecard-bot:only-for-build-cache-builder
           docker logout
         name: Push to DockerHub
+      - run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login -u rinsuki --password-stdin docker.pkg.github.com
+          docker push docker.pkg.github.com/rinsuki/discord-timecard-bot/only-for-build-cache-builder:latest
+          docker logout docker.pkg.github.com
+        name: Push to GitHub Registry
+        
