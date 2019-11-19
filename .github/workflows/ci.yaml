@@ -17,7 +17,7 @@ jobs:
       - run: docker pull rinsuki/discord-timecard-bot:latest
         name: Pull from DockerHub
       - run: |
-          docker build --tag rinsuki/discord-timecard-bot:latest .
+          docker build --cache-from docker.pkg.github.com/rinsuki/discord-timecard-bot/only-for-build-cache-builder:latest,rinsuki/discord-timecard-bot:latest --tag rinsuki/discord-timecard-bot:latest .
         env:
           DOCKER_BUILDKIT: 1
       - run: |
