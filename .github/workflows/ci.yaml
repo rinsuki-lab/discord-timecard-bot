@@ -11,6 +11,9 @@ jobs:
       - uses: actions/checkout@master
       - run: |
           docker build --tag rinsuki/discord-timecard-bot:latest .
+        env:
+          DOCKER_BUILDKIT: 1
+      - run: |
           docker build --target builder --tag docker.pkg.github.com/rinsuki/discord-timecard-bot/only-for-build-cache-builder:latest .
         env:
           DOCKER_BUILDKIT: 1
