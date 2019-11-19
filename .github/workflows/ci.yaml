@@ -10,6 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login -u rinsuki --password-stdin docker.pkg.github.com
+          docker pull docker.pkg.github.com/rinsuki/discord-timecard-bot/only-for-build-cache-builder:latest
+          docker logout docker.pkg.github.com
+        name: Pull from GitHub Registry
+      - run: docker pull rinsuki/discord-timecard-bot:latest
+        name: Pull from DockerHub
+      - run: |
           docker build --tag rinsuki/discord-timecard-bot:latest .
         env:
           DOCKER_BUILDKIT: 1
