@@ -12,4 +12,8 @@ jobs:
       - run: docker build --tag docker.pkg.github.com/rinsuki/discord-timecard-bot/app:latest .
         env:
           DOCKER_BUILDKIT: 1
-      - run: docker push docker.pkg.github.com/rinsuki/discord-timecard-bot/app:latest
+      - run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login -u rinsuki --password-stdin docker.pkg.github.com
+          docker push docker.pkg.github.com/rinsuki/discord-timecard-bot/app:latest
+          docker logout docker.pkg.github.com
+        name: Push to GitHub Packages
