@@ -63,7 +63,7 @@ class MyBot: DiscordClientDelegate {
             userJoinedChannelDictionary[voiceState.userId] = currentChannel
             
             if let lastChannel = lastChannel { // move
-                if lastChannel.id == currentChannel.id {
+                if lastChannel.id != currentChannel.id {
                     createPost("[\(currentChannel.name)] \(nickname) moved from \(lastChannel.name).")
                 }
             } else { // join
