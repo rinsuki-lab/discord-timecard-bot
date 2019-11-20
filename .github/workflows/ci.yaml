@@ -17,7 +17,7 @@ jobs:
         with:
           path: buildkit-cache
           key: v1
-      - run: python3 .github/workflows/buildkit-wrapper.py
+      - run: python3 .github/workflows/buildkit-wrapper.py | docker load
         name: Build container
         env: 
           BUILDKIT_HOST: tcp://0.0.0.0:1234
