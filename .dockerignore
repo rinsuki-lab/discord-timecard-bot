@@ -1,1 +1,5 @@
-.build/
+/*
+!/Sources
+!/Tests
+!/Package.swift
+!/Package.resolved
