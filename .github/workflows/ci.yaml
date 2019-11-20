@@ -9,32 +9,20 @@ jobs:
     runs-on: Ubuntu-latest
     steps:
       - uses: actions/checkout@master
+      - uses: actions/cache@v1
+        with:
+          path: buildkit-cache
+          key: v1
       - run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | docker login -u rinsuki --password-stdin docker.pkg.github.com
-          docker pull docker.pkg.github.com/rinsuki/discord-timecard-bot/only-for-build-cache-builder:latest
-          docker logout docker.pkg.github.com
-        name: Pull from GitHub Registry
-      - run: docker pull rinsuki/discord-timecard-bot:latest
-        name: Pull from DockerHub
-      - run: |
-          docker build \
-            --cache-from docker.pkg.github.com/rinsuki/discord-timecard-bot/only-for-build-cache-builder:latest \
-            --cache-from rinsuki/discord-timecard-bot:latest \
-            --tag rinsuki/discord-timecard-bot:latest .
-        env:
-          DOCKER_BUILDKIT: 1
-      - run: |
-          docker build --target builder --tag docker.pkg.github.com/rinsuki/discord-timecard-bot/only-for-build-cache-builder:latest .
-        env:
-          DOCKER_BUILDKIT: 1
+          buildctl build \
+            --frontend=dockerfile.v0 \
+            --local context=. \
+            --local dockerfile=. \
+            --import-cache type=local,src=./buildkit-cache \
+            --export-cache type=local,dest=./buildkit-cache \
+            --output type=docker,name=rinsuki/discord-timecard-bot | docker load
       - run: |
           echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u rinsuki --password-stdin
           docker push rinsuki/discord-timecard-bot:latest
           docker logout
         name: Push to DockerHub
-      - run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | docker login -u rinsuki --password-stdin docker.pkg.github.com
-          docker push docker.pkg.github.com/rinsuki/discord-timecard-bot/only-for-build-cache-builder:latest
-          docker logout docker.pkg.github.com
-        name: Push to GitHub Registry
-        
