@@ -8,6 +8,12 @@ jobs:
   docker:
     runs-on: Ubuntu-latest
     steps:
+      - run: |
+          docker run --name buildkit -d --privileged -p 1234:1234 moby/buildkit --addr tcp://0.0.0.0:1234
+          export BUILDKIT_HOST=tcp://0.0.0.0:1234
+          docker cp buildkit:/usr/bin/buildctl /usr/local/bin/
+          buildctl build --help
+        name: Setup BuildKit
       - uses: actions/checkout@master
       - uses: actions/cache@v1
         with:
@@ -21,6 +27,7 @@ jobs:
             --import-cache type=local,src=./buildkit-cache \
             --export-cache type=local,dest=./buildkit-cache \
             --output type=docker,name=rinsuki/discord-timecard-bot | docker load
+        name: Build container
       - run: |
           echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u rinsuki --password-stdin
           docker push rinsuki/discord-timecard-bot:latest
