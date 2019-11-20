@@ -11,7 +11,7 @@ jobs:
       - run: |
           docker run --name buildkit -d --privileged -p 1234:1234 moby/buildkit --addr tcp://0.0.0.0:1234
           export BUILDKIT_HOST=tcp://0.0.0.0:1234
-          docker cp buildkit:/usr/bin/buildctl /usr/local/bin/
+          sudo docker cp buildkit:/usr/bin/buildctl /usr/local/bin/
           buildctl build --help
         name: Setup BuildKit
       - uses: actions/checkout@master
