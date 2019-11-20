@@ -21,7 +21,7 @@ jobs:
           key: v1
       - run: |
           buildctl build \
-            --frontend=dockerfile.v0 \
+            --frontend dockerfile.v0 \
             --local context=. \
             --local dockerfile=. \
             --import-cache type=local,src=./buildkit-cache \
