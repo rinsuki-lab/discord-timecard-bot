@@ -19,14 +19,7 @@ jobs:
         with:
           path: buildkit-cache
           key: v1
-      - run: |
-          buildctl build \
-            --frontend dockerfile.v0 \
-            --local context=. \
-            --local dockerfile=. \
-            --import-cache type=local,src=./buildkit-cache \
-            --export-cache type=local,dest=./buildkit-cache \
-            --output type=docker,name=rinsuki/discord-timecard-bot | docker load
+      - run: python3 .github/workflows/buildkit-wrapper.py
         name: Build container
       - run: |
           echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u rinsuki --password-stdin
