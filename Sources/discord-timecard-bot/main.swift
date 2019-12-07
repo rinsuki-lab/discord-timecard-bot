@@ -45,6 +45,7 @@ class MyBot: DiscordClientDelegate {
     func client(_ client: DiscordClient, didReceiveVoiceStateUpdate voiceState: DiscordVoiceState) {
         let p = async { _ in
             let member = try await(client.getGuildMember(by: voiceState.userId, on: voiceState.guildId))
+            if member.user.bot { return }
             let nickname = member.nick ?? member.user.username
             
             let lastChannel = userJoinedChannelDictionary[voiceState.userId]
